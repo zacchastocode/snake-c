@@ -39,8 +39,6 @@ void InitGame(void);
 void UpdateGame(void);
 void DrawGame(void);
 void ResetGame(void);
-bool CheckCollisionWithSelf(void);
-bool CheckCollisionWithWall(void);
 void SpawnFood(void);
 bool IsFoodOnSnake(Vector2Int pos);
 
