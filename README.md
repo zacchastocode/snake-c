@@ -39,11 +39,31 @@ Using dnf package manager:
 sudo dnf install raylib-devel
 ```
 
+### Windows
+
+For Windows, you have several options:
+
+1. **Using MSYS2** (Recommended):
+   ```bash
+   pacman -S mingw-w64-x86_64-raylib
+   ```
+
+2. **Using vcpkg**:
+   ```bash
+   vcpkg install raylib
+   ```
+
+3. **Manual installation**: Download pre-compiled binaries from the [official Raylib releases](https://github.com/raysan5/raylib/releases)
+
+**Note**: On Windows, you'll need to modify the Makefile to use the Windows-specific library flags (see comment in Makefile line 11), or use CMake instead of Make.
+
 ### Other Systems
 
 For other operating systems or manual installation, please refer to the [official Raylib installation guide](https://github.com/raysan5/raylib#build-and-installation).
 
 ## Build Instructions
+
+### Linux/macOS
 
 To build the game, simply run:
 ```bash
@@ -57,11 +77,33 @@ To clean up build artifacts:
 make clean
 ```
 
+### Windows
+
+On Windows, you'll need a Unix-like environment such as MSYS2, MinGW, or WSL (Windows Subsystem for Linux):
+
+1. **Using MSYS2/MinGW**: Open MSYS2 terminal and run `make`
+2. **Using WSL**: Open WSL terminal and run `make` (you'll need to install Raylib in WSL)
+3. **Using PowerShell/CMD**: You cannot use `make` directly. Consider using CMake or compiling manually:
+   ```cmd
+   gcc -std=c99 -Wall -Wextra -O2 -o snake.exe main.c -lraylib -lopengl32 -lgdi32 -lwinmm
+   ```
+
 ## Run Instructions
 
-After building, run the game with:
+After building, run the game:
+
+**Linux/macOS**:
 ```bash
 ./snake
+```
+
+**Windows**:
+```cmd
+snake.exe
+```
+or simply:
+```cmd
+snake
 ```
 
 ## How to Play
