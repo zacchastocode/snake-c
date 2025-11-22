@@ -246,9 +246,18 @@ void DrawGame(void) {
 }
 
 void SpawnFood(void) {
+    int attempts = 0;
+    int maxAttempts = GRID_WIDTH * GRID_HEIGHT;
+    
     do {
         food.position.x = rand() % GRID_WIDTH;
         food.position.y = rand() % GRID_HEIGHT;
+        attempts++;
+        
+        // Safety check: if grid is nearly full, just place food anywhere
+        if (attempts >= maxAttempts) {
+            break;
+        }
     } while (IsFoodOnSnake(food.position));
     
     food.active = true;

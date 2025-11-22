@@ -7,6 +7,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -O2
 
 # Libraries
+# Note: On macOS, you may only need: LIBS = -lraylib
+# On Windows with MinGW, you may need: LIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
 LIBS = -lraylib -lm -lpthread -ldl -lrt -lX11
 
 # Target executable
