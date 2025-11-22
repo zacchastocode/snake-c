@@ -15,3 +15,6 @@ snake
 # OS files
 .DS_Store
 Thumbs.db
+
+# CodeQL artifacts
+_codeql_detected_source_root
