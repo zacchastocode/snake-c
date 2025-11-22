@@ -29,7 +29,7 @@ typedef struct {
 
 // Function prototypes
 void InitGame(Snake *snake, Food *food, int *score);
-void UpdateGame(Snake *snake, Food *food, int *score, bool *gameOver, float *moveTimer);
+void UpdateGame(Snake *snake, Food *food, int *score, bool *gameOver, float *moveTimer, float moveInterval);
 void DrawGame(Snake *snake, Food *food, int score, bool gameOver);
 void SpawnFood(Food *food, Snake *snake);
 bool CheckCollision(Snake *snake);
@@ -80,7 +80,7 @@ int main(void) {
         
         // Update game
         if (!gameOver) {
-            UpdateGame(&snake, &food, &score, &gameOver, &moveTimer);
+            UpdateGame(&snake, &food, &score, &gameOver, &moveTimer, moveInterval);
         }
         
         // Draw
@@ -116,11 +116,11 @@ void InitGame(Snake *snake, Food *food, int *score) {
     *score = 0;
 }
 
-void UpdateGame(Snake *snake, Food *food, int *score, bool *gameOver, float *moveTimer) {
+void UpdateGame(Snake *snake, Food *food, int *score, bool *gameOver, float *moveTimer, float moveInterval) {
     *moveTimer += GetFrameTime();
     
     // Move snake at intervals
-    if (*moveTimer >= 0.15f) {
+    if (*moveTimer >= moveInterval) {
         *moveTimer = 0.0f;
         
         // Update direction
@@ -231,9 +231,17 @@ void DrawGame(Snake *snake, Food *food, int score, bool gameOver) {
 }
 
 void SpawnFood(Food *food, Snake *snake) {
-    bool validPosition = false;
+    // If snake fills the entire grid, no valid position exists
+    if (snake->length >= GRID_WIDTH * GRID_HEIGHT) {
+        food->active = false;
+        return;
+    }
     
-    while (!validPosition) {
+    bool validPosition = false;
+    int maxAttempts = GRID_WIDTH * GRID_HEIGHT * 2; // Safety limit
+    int attempts = 0;
+    
+    while (!validPosition && attempts < maxAttempts) {
         food->position.x = rand() % GRID_WIDTH;
         food->position.y = rand() % GRID_HEIGHT;
         
@@ -247,7 +255,9 @@ void SpawnFood(Food *food, Snake *snake) {
                 break;
             }
         }
+        
+        attempts++;
     }
     
-    food->active = true;
+    food->active = validPosition;
 }
