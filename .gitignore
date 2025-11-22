@@ -12,3 +12,6 @@ snake
 # OS files
 .DS_Store
 Thumbs.db
+
+# CodeQL files
+_codeql_detected_source_root
